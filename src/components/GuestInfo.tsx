@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Utensils, MapPin, Church } from 'lucide-react';
 import { ScrollAnimation } from './ScrollAnimation';
+import VenueImage from '../assets/images/venueg.jpg';
+import W01 from '../assets/images/W01.png';
 
 type TabType = 'meal' | 'venue' | 'ceremony';
 
@@ -81,7 +83,7 @@ export function GuestInfo() {
             <div className="space-y-6 animate-fadeIn">
               <div className="rounded-2xl overflow-hidden shadow-lg">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1761120789207-c08a10afb864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwdmVudWUlMjBoYWxsJTIwZWxlZ2FudHxlbnwxfHx8fDE3NjQ2NTc2MzN8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={VenueImage}
                   alt="Wedding Venue"
                   className="w-full h-80 object-cover"
                 />
@@ -102,16 +104,17 @@ export function GuestInfo() {
             <div className="space-y-6 animate-fadeIn">
               <div className="rounded-2xl overflow-hidden shadow-lg">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1761574044344-394d47e1a96c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY2VyZW1vbnklMjBlbGVnYW50fGVufDF8fHx8MTc2NDU5MTI5MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={W01}
                   alt="Wedding Ceremony"
-                  className="w-full h-80 object-cover"
+                  className="w-80
+                   h-80 object-cover"
                 />
               </div>
               <div className="text-center space-y-4">
                 <h3 className="text-lg text-gray-600">예식 순서</h3>
                 <div className="space-y-3 text-gray-500">
                   <div className="flex justify-between items-center px-8">
-                    <span className="text-gray-400">13:15</span>
+                    <span className="text-gray-400">13:20</span>
                     <span>하객 입장</span>
                   </div>
                   <div className="flex justify-between items-center px-8">
@@ -120,14 +123,18 @@ export function GuestInfo() {
                   </div>
                   <div className="flex justify-between items-center px-8">
                     <span className="text-gray-400">14:00</span>
-                    <span>혼인 서약 및 예물 교환</span>
+                    <span>혼인 서약</span>
                   </div>
                   <div className="flex justify-between items-center px-8">
                     <span className="text-gray-400">14:10</span>
-                    <span>양가 부모님 인사</span>
+                    <span>축사 및 축가</span>
                   </div>
                   <div className="flex justify-between items-center px-8">
                     <span className="text-gray-400">14:20</span>
+                    <span>양가 부모님 인사</span>
+                  </div>
+                  <div className="flex justify-between items-center px-8">
+                    <span className="text-gray-400">14:30</span>
                     <span>폐회 및 사진 촬영</span>
                   </div>
                 </div>

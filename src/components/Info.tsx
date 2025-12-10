@@ -4,7 +4,7 @@ import { ScrollAnimation } from './ScrollAnimation';
 
 export function Info() {
   return (
-    <div className="py-8 px-6 bg-gray-50">
+    <div id="info" className="py-8 px-6 bg-gray-50">
       <div className="max-w-4xl mx-auto">
         <ScrollAnimation>
 

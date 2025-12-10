@@ -99,8 +99,9 @@ export function AccountInfo() {
             <h2 className="text-lg text-pink mb-2">Account Info</h2>
             <p className="text-gray-400 text-sm mb-2">마음 전하실 곳</p>
             <p className="text-gray-500 text-sm">
-              참석이 어려우신 분들을 위해<br />
-              계좌번호를 안내해 드립니다
+              참석이 어려워 직접 축하를 전하지 못하는<br />
+              분들을 위해 계좌번호를 기재하였습니다.<br />
+              넓은 마음으로 양해 부탁드립니다.<br />
             </p>
           </div>
         </ScrollAnimation>
@@ -108,7 +109,7 @@ export function AccountInfo() {
         <div className="space-y-4">
           {/* Groom Section */}
           <ScrollAnimation delay={200}>
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-4">
               <button
                 onClick={() => setGroomOpen(!groomOpen)}
                 className="w-full px-6 py-5 flex items-center justify-between hover:bg-gray-50 transition-colors"
@@ -140,10 +141,8 @@ export function AccountInfo() {
                 </div>
               )}
             </div>
-          </ScrollAnimation>
 
           {/* Bride Section */}
-          <ScrollAnimation delay={400}>
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <button
                 onClick={() => setBrideOpen(!brideOpen)}
