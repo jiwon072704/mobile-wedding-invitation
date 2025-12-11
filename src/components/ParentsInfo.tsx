@@ -1,6 +1,6 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ScrollAnimation } from './ScrollAnimation';
-import { Heart } from 'lucide-react';
+import letter2 from '../assets/images/letter2.png';
 
 export function ParentsInfo() {
   return (
@@ -46,14 +46,7 @@ export function ParentsInfo() {
           {/* Bride's Parents */}
           <ScrollAnimation delay={400}>
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
-              <div className="aspect-[3/4] overflow-hidden bg-gray-100">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1761671613738-ece654cfa2fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzb3BoaXN0aWNhdGVkJTIwZWxkZXJseSUyMGNvdXBsZSUyMGZvcm1hbHxlbnwxfHx8fDE3NjQ2NDI1MDF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="신부 부모님"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6 text-center">
+            <div className="p-6 text-center">
                 <div className="text-xl mb-2">신부측 혼주</div>
                 <div className="space-y-1 text-gray-600">
                   <div>
@@ -66,6 +59,15 @@ export function ParentsInfo() {
                   </div>
                 </div>
               </div>
+              <div className="mx-auto w-18 border-t border-gray-200 mb-3"></div>
+              <div className="aspect-[3/4] overflow-hidden bg-gray-100">
+                <ImageWithFallback
+                  src={letter2}
+                  alt="신부 부모님"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
             </div>
           </ScrollAnimation>
         </div>
