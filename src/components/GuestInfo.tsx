@@ -3,7 +3,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Utensils, MapPin, Church } from 'lucide-react';
 import { ScrollAnimation } from './ScrollAnimation';
 import VenueImage from '../assets/images/venueg.jpg';
-import W01 from '../assets/images/W01.png';
+import WeddingImage from '../assets/images/w3_1.png';
 
 type TabType = 'meal' | 'venue' | 'ceremony';
 
@@ -104,7 +104,7 @@ export function GuestInfo() {
             <div className="space-y-6 animate-fadeIn">
               <div className="rounded-2xl overflow-hidden shadow-lg">
                 <ImageWithFallback
-                  src={W01}
+                  src={WeddingImage}
                   alt="Wedding Ceremony"
                   className="w-80
                    h-80 object-cover"

@@ -2,47 +2,128 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { ScrollAnimation } from './ScrollAnimation';
+import WeddingImage1 from '../assets/images/hm1.png';
+import WeddingImage2 from '../assets/images/jw1.png';
+import WeddingImage3 from '../assets/images/jw2.png';
+import WeddingImage4 from '../assets/images/jw3.png';
+import WeddingImage5 from '../assets/images/w1.png';
+import WeddingImage6 from '../assets/images/w2.png';
+import WeddingImage7 from '../assets/images/w3.png';
+import WeddingImage8 from '../assets/images/w4.png';
+import WeddingImage9 from '../assets/images/w5.png';
+import WeddingImage10 from '../assets/images/w6.png';
+import WeddingImage11 from '../assets/images/w7.png';
+import WeddingImage12 from '../assets/images/w8.png';
+import WeddingImage13 from '../assets/images/w9.png';
+import WeddingImage14 from '../assets/images/w10.png';
+import WeddingImage15 from '../assets/images/w11.png';
+import WeddingImage16 from '../assets/images/w12.png'; 
+import WeddingImage17 from '../assets/images/w13.png';
+import WeddingImage18 from '../assets/images/w14.png';
+import WeddingImage19 from '../assets/images/w15.png';  
+import WeddingImage20 from '../assets/images/w16.png';
+
 
 const galleryImages = [
   {
     id: 1,
-    url: 'https://images.unsplash.com/photo-1762941744800-385b067dff21?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY291cGxlJTIwZWxlZ2FudHxlbnwxfHx8fDE3NjQ2MTQ4OTd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage1,
     alt: 'Wedding photo 1'
   },
   {
     id: 2,
-    url: 'https://images.unsplash.com/photo-1700142611715-8a023c5eb8c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwZmxvd2VycyUyMHdoaXRlfGVufDF8fHx8MTc2NDU5NjQ0OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage2,
     alt: 'Wedding photo 2'
   },
   {
     id: 3,
-    url: 'https://images.unsplash.com/photo-1581720848209-9721f8fa30ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwZGVjb3JhdGlvbiUyMHJvbWFudGljfGVufDF8fHx8MTc2NDYwMTU3N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage3,
     alt: 'Wedding photo 3'
   },
   {
     id: 4,
-    url: 'https://images.unsplash.com/photo-1696204868916-cda7380ae72b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY2VyZW1vbnklMjB2ZW51ZXxlbnwxfHx8fDE3NjQ2Mzc2MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage4,
     alt: 'Wedding photo 4'
   },
   {
     id: 5,
-    url: 'https://images.unsplash.com/photo-1738694242379-ef21044985bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwcmluZ3MlMjBlbGVnYW50fGVufDF8fHx8MTc2NDYwNTk1MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage5,
     alt: 'Wedding photo 5'
   },
   {
     id: 6,
-    url: 'https://images.unsplash.com/photo-1648854607533-d6ff6af33b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwYm91cXVldCUyMHJvc2VzfGVufDF8fHx8MTc2NDUyOTE3Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage6,
     alt: 'Wedding photo 6'
   },
   {
     id: 7,
-    url: 'https://images.unsplash.com/photo-1613067532743-33c628bc7e1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwdmVudWUlMjBkZWNvcmF0aW9ufGVufDF8fHx8MTc2NDU5MTQwMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage7,
     alt: 'Wedding photo 7'
   },
   {
     id: 8,
-    url: 'https://images.unsplash.com/photo-1584158531319-96912adae663?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY2FrZSUyMGVsZWdhbnR8ZW58MXx8fHwxNzY0NTM3NTQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    url: WeddingImage8,
     alt: 'Wedding photo 8'
+  },
+  {
+    id: 9,
+    url: WeddingImage9,
+    alt: 'Wedding photo 9'
+  },
+  {
+    id: 10,
+    url: WeddingImage10,
+    alt: 'Wedding photo 10'
+  },
+  {
+    id: 11,
+    url: WeddingImage11,
+    alt: 'Wedding photo 11'
+  },
+  {
+    id: 12,
+    url: WeddingImage12,
+    alt: 'Wedding photo 12'
+  },
+  {
+    id: 13, 
+    url: WeddingImage13,
+    alt: 'Wedding photo 13'
+  },
+  {
+    id: 14,
+    url: WeddingImage14,
+    alt: 'Wedding photo 14'
+  },
+  {
+    id: 15,
+    url: WeddingImage15,
+    alt: 'Wedding photo 15'
+  },
+  {
+    id: 16,
+    url: WeddingImage16,
+    alt: 'Wedding photo 16'
+  },
+  {
+    id: 17,
+    url: WeddingImage17,
+    alt: 'Wedding photo 17'
+  },
+  {
+    id: 18,
+    url: WeddingImage18,
+    alt: 'Wedding photo 18'
+  },
+  {
+    id: 19,
+    url: WeddingImage19,
+    alt: 'Wedding photo 19'
+  },
+  {
+    id: 20,
+    url: WeddingImage20,
+    alt: 'Wedding photo 20'
   }
 ];
 

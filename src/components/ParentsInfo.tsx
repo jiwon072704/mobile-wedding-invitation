@@ -1,6 +1,6 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ScrollAnimation } from './ScrollAnimation';
-import letter2 from '../assets/images/letter2.png';
+import jiwonParents from '../assets/images/jiwonParents.png';
 
 export function ParentsInfo() {
   return (
@@ -45,8 +45,15 @@ export function ParentsInfo() {
 
           {/* Bride's Parents */}
           <ScrollAnimation delay={400}>
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
-            <div className="p-6 text-center">
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 mb-8">
+              <div className="aspect-[3/4] overflow-hidden bg-gray-100">
+                <ImageWithFallback
+                  src={jiwonParents}
+                  alt="신부 부모님"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6 text-center">
                 <div className="text-xl mb-2">신부측 혼주</div>
                 <div className="space-y-1 text-gray-600">
                   <div>
@@ -59,15 +66,6 @@ export function ParentsInfo() {
                   </div>
                 </div>
               </div>
-              <div className="mx-auto w-18 border-t border-gray-200 mb-3"></div>
-              <div className="aspect-[3/4] overflow-hidden bg-gray-100">
-                <ImageWithFallback
-                  src={letter2}
-                  alt="신부 부모님"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
             </div>
           </ScrollAnimation>
         </div>
