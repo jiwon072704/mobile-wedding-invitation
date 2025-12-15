@@ -4,13 +4,12 @@ import weddingImage1 from '../assets/images/w1.png';
 import weddingImage2 from '../assets/images/w4.png';
 import weddingImage3 from '../assets/images/w9.png';
 import weddingImage4 from '../assets/images/w15.png'; 
-import letter from '../assets/images/letter.jpeg';
 import { ChevronDown } from 'lucide-react';
 
 
 export function WeddingHero() {
   const randomHeroImage = useMemo(() => {
-    const images = [weddingImage1, letter];
+    const images = [weddingImage1, weddingImage2, weddingImage3, weddingImage4];
     const randomIndex = Math.floor(Math.random() * images.length);
     return images[randomIndex]
   }, []);

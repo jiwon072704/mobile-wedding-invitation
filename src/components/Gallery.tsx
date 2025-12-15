@@ -1,6 +1,6 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ScrollAnimation } from './ScrollAnimation';
 import WeddingImage1 from '../assets/images/hm1.png';
 import WeddingImage2 from '../assets/images/jw1.png';
@@ -130,6 +130,9 @@ const galleryImages = [
 export function Gallery() {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const touchMovedRef = useRef<boolean>(false);
 
   const displayedImages = showAll ? galleryImages : galleryImages.slice(0, 4);
 
@@ -155,6 +158,43 @@ export function Gallery() {
         selectedImageIndex === galleryImages.length - 1 ? 0 : selectedImageIndex + 1
       );
     }
+  };
+
+  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    const touch = e.touches[0];
+    touchStartXRef.current = touch.clientX;
+    touchStartYRef.current = touch.clientY;
+    touchMovedRef.current = false;
+  };
+
+  const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    const touch = e.touches[0];
+    const startX = touchStartXRef.current;
+    const startY = touchStartYRef.current;
+    if (startX == null || startY == null) return;
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+      touchMovedRef.current = true;
+    }
+  };
+
+  const handleTouchEnd: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    const startX = touchStartXRef.current;
+    if (startX == null) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - startX;
+    const SWIPE_THRESHOLD = 50;
+    if (Math.abs(dx) >= SWIPE_THRESHOLD) {
+      if (dx < 0) {
+        goToNext();
+      } else {
+        goToPrevious();
+      }
+    }
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+    touchMovedRef.current = false;
   };
 
   return (
@@ -230,9 +270,9 @@ export function Gallery() {
                 e.stopPropagation();
                 goToPrevious();
               }}
-              className="absolute left-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10"
+              className="absolute left-4 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors z-10"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-6 h-6" strokeWidth={3} />
             </button>
 
             {/* Next Button */}
@@ -241,20 +281,23 @@ export function Gallery() {
                 e.stopPropagation();
                 goToNext();
               }}
-              className="absolute right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10"
+              className="absolute right-4 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors z-10"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-6 h-6" strokeWidth={3} />
             </button>
 
             {/* Image */}
             <div
               className="max-w-5xl max-h-[90vh] w-full px-4"
-              onClick={(e) => e.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
               <ImageWithFallback
                 src={galleryImages[selectedImageIndex].url}
                 alt={galleryImages[selectedImageIndex].alt}
                 className="w-full h-full object-contain rounded-lg"
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
 
