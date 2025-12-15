@@ -134,8 +134,6 @@ export function Gallery() {
   const touchStartYRef = useRef<number | null>(null);
   const touchMovedRef = useRef<boolean>(false);
 
-  const displayedImages = showAll ? galleryImages : galleryImages.slice(0, 4);
-
   const openImage = (index: number) => {
     setSelectedImageIndex(index);
   };
@@ -197,6 +195,8 @@ export function Gallery() {
     touchMovedRef.current = false;
   };
 
+  const displayedImages = showAll ? galleryImages : galleryImages.slice(0, 9);
+
   return (
     <div className="py-16 px-6 bg-white">
       <div className="max-w-4xl mx-auto">
@@ -208,7 +208,7 @@ export function Gallery() {
         </ScrollAnimation>
 
         <ScrollAnimation delay={200}>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             {displayedImages.map((image, index) => (
               <div
                 key={image.id}
@@ -224,9 +224,7 @@ export function Gallery() {
             ))}
           </div>
         </ScrollAnimation>
-
-        {/* More Button */}
-        {!showAll && galleryImages.length > 4 && (
+        {!showAll && galleryImages.length > 9 && (
           <ScrollAnimation delay={400}>
             <div className="mt-8 text-center">
               <button
@@ -238,16 +236,17 @@ export function Gallery() {
             </div>
           </ScrollAnimation>
         )}
-
-        {showAll && (
-          <div className="mt-8 text-center">
-            <button
-              onClick={() => setShowAll(false)}
-              className="px-8 py-3 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              접기
-            </button>
-          </div>
+        {showAll && galleryImages.length > 9 && (
+          <ScrollAnimation delay={400}>
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => setShowAll(false)}
+                className="px-8 py-3 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                접기
+              </button>
+            </div>
+          </ScrollAnimation>
         )}
 
         {/* Image Modal */}
