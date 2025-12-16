@@ -22,6 +22,7 @@ import WeddingImage17 from '../assets/images/w13.png';
 import WeddingImage18 from '../assets/images/w14.png';
 import WeddingImage19 from '../assets/images/w15.png';  
 import WeddingImage20 from '../assets/images/w16.png';
+import WeddingImage22 from '../assets/images/w17.png';
 import WeddingImage21 from '../assets/images/w20.png';
 
 
@@ -117,6 +118,11 @@ const galleryImages = [
     alt: 'Wedding photo 17'
   },
   {
+    id: 20,
+    url: WeddingImage22,
+    alt: 'Wedding photo 20'
+  },
+  {
     id: 18,
     url: WeddingImage18,
     alt: 'Wedding photo 18'
@@ -131,20 +137,24 @@ const galleryImages = [
 export function Gallery() {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const touchMovedRef = useRef<boolean>(false);
 
   const openImage = (index: number) => {
     setSelectedImageIndex(index);
+    setShowSwipeHint(true);
   };
 
   const closeImage = () => {
     setSelectedImageIndex(null);
+    setShowSwipeHint(false);
   };
 
   const goToPrevious = () => {
     if (selectedImageIndex !== null) {
+      setShowSwipeHint(false);
       setSelectedImageIndex(
         selectedImageIndex === 0 ? galleryImages.length - 1 : selectedImageIndex - 1
       );
@@ -153,6 +163,7 @@ export function Gallery() {
 
   const goToNext = () => {
     if (selectedImageIndex !== null) {
+      setShowSwipeHint(false);
       setSelectedImageIndex(
         selectedImageIndex === galleryImages.length - 1 ? 0 : selectedImageIndex + 1
       );
@@ -185,6 +196,7 @@ export function Gallery() {
     const dx = touch.clientX - startX;
     const SWIPE_THRESHOLD = 50;
     if (Math.abs(dx) >= SWIPE_THRESHOLD) {
+      setShowSwipeHint(false);
       if (dx < 0) {
         goToNext();
       } else {
@@ -256,6 +268,11 @@ export function Gallery() {
             className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
             onClick={closeImage}
           >
+            {showSwipeHint && (
+              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white px-4 py-2 animate-pulse pointer-events-none">
+                옆으로 밀어 넘겨보세요
+              </div>
+            )}
             {/* Close Button */}
             <button
               onClick={closeImage}
