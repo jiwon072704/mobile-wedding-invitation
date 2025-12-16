@@ -1,9 +1,9 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useMemo } from 'react';
-import weddingImage1 from '../assets/images/w1.png';
-import weddingImage2 from '../assets/images/w4.png';
-import weddingImage3 from '../assets/images/w9.png';
-import weddingImage4 from '../assets/images/w15.png'; 
+import weddingImage1 from '../assets/images/letter1.png';
+import weddingImage2 from '../assets/images/letter2.png';
+import weddingImage3 from '../assets/images/letter3.png';
+import weddingImage4 from '../assets/images/letter4.png'; 
 import { ChevronDown } from 'lucide-react';
 
 

@@ -14,7 +14,7 @@ import WeddingImage9 from '../assets/images/w5.png';
 import WeddingImage10 from '../assets/images/w6.png';
 import WeddingImage11 from '../assets/images/w7.png';
 import WeddingImage12 from '../assets/images/w8.png';
-import WeddingImage13 from '../assets/images/w9.png';
+
 import WeddingImage14 from '../assets/images/w10.png';
 import WeddingImage15 from '../assets/images/w11.png';
 import WeddingImage16 from '../assets/images/w12.png'; 
@@ -22,72 +22,78 @@ import WeddingImage17 from '../assets/images/w13.png';
 import WeddingImage18 from '../assets/images/w14.png';
 import WeddingImage19 from '../assets/images/w15.png';  
 import WeddingImage20 from '../assets/images/w16.png';
+import WeddingImage21 from '../assets/images/w20.png';
 
 
 const galleryImages = [
   {
-    id: 1,
-    url: WeddingImage1,
+    id: 5,
+    url: WeddingImage5,
     alt: 'Wedding photo 1'
-  },
-  {
-    id: 2,
-    url: WeddingImage2,
-    alt: 'Wedding photo 2'
-  },
-  {
-    id: 3,
-    url: WeddingImage3,
-    alt: 'Wedding photo 3'
   },
   {
     id: 4,
     url: WeddingImage4,
-    alt: 'Wedding photo 4'
-  },
-  {
-    id: 5,
-    url: WeddingImage5,
-    alt: 'Wedding photo 5'
+    alt: 'jw3'
   },
   {
     id: 6,
     url: WeddingImage6,
-    alt: 'Wedding photo 6'
+    alt: 'Wedding photo 2'
+  },
+  {
+    id: 1,
+    url: WeddingImage1,
+    alt: 'hm'
+  },
+  {
+    id: 3,
+    url: WeddingImage3,
+    alt: 'jw2'
+  },
+  {
+    id: 2,
+    url: WeddingImage2,
+    alt: 'jw1'
   },
   {
     id: 7,
     url: WeddingImage7,
-    alt: 'Wedding photo 7'
+    alt: 'Wedding photo 3'
   },
   {
     id: 8,
     url: WeddingImage8,
-    alt: 'Wedding photo 8'
+    alt: 'Wedding photo 4'
   },
   {
     id: 9,
     url: WeddingImage9,
-    alt: 'Wedding photo 9'
+    alt: 'Wedding photo 5'
+  },
+  {
+    id: 20,
+    url: WeddingImage20,
+    alt: 'Wedding photo 20'
   },
   {
     id: 10,
     url: WeddingImage10,
-    alt: 'Wedding photo 10'
+    alt: 'Wedding photo 6'
   },
   {
     id: 11,
     url: WeddingImage11,
-    alt: 'Wedding photo 11'
+    alt: 'Wedding photo 7'
   },
   {
     id: 12,
     url: WeddingImage12,
-    alt: 'Wedding photo 12'
+    alt: 'Wedding photo 8'
   },
   {
     id: 13, 
-    url: WeddingImage13,
+    url: WeddingImage21,
     alt: 'Wedding photo 13'
   },
   {
@@ -119,11 +125,6 @@ const galleryImages = [
     id: 19,
     url: WeddingImage19,
     alt: 'Wedding photo 19'
-  },
-  {
-    id: 20,
-    url: WeddingImage20,
-    alt: 'Wedding photo 20'
   }
 ];
 
