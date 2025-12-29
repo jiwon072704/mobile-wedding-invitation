@@ -1,6 +1,7 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ScrollAnimation } from './ScrollAnimation';
 import jiwonParents from '../assets/images/jiwonParents.png';
+import hyeonminParents from '../assets/images/hm2.png';
 
 export function ParentsInfo() {
   return (
@@ -22,7 +23,7 @@ export function ParentsInfo() {
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 mb-8">
               <div className="aspect-[3/4] overflow-hidden bg-gray-100">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1731335150363-0dcd7db3b908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwc2VuaW9yJTIwY291cGxlJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzY0NjQyNTAxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src={hyeonminParents}
                   alt="신랑 부모님"
                   className="w-full h-full object-cover"
                 />

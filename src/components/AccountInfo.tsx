@@ -15,18 +15,18 @@ export function AccountInfo() {
 
   const groomAccounts: Account[] = [
     {
-      bank: '신한은행',
-      accountNumber: '110-123-456789',
+      bank: '기업은행',
+      accountNumber: '34509580401012',
       holder: '김현민'
     },
     {
-      bank: '국민은행',
-      accountNumber: '123-45-6789-012',
+      bank: '우리은행',
+      accountNumber: '680-314147-02-101',
       holder: '김병오 (신랑 아버지)'
     },
     {
-      bank: '우리은행',
-      accountNumber: '1002-123-456789',
+      bank: '신협은행',
+      accountNumber: '03196-13-053126',
       holder: '진은선 (신랑 어머니)'
     }
   ];
