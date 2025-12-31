@@ -24,26 +24,11 @@ export function Info() {
     const siteUrl = 'https://hyeonminjiwon-wedding-invitation.vercel.app';
     const imageUrl = `${window.location.origin}${shareImage}`;
 
-    kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: '김현민 ❤️ 이지원 결혼합니다.',
-        description: '2026년 06월 27일 토요일 저희의 결혼식에 초대합니다.',
-        imageUrl,
-        link: {
-          mobileWebUrl: siteUrl,
-          webUrl: siteUrl,
-        },
+    kakao.Share.sendCustom({
+      templateId: 12345, 
+      templateArgs: {
+       
       },
-      buttons: [
-        {
-          title: '모바일 청첩장 보기',
-          link: {
-            mobileWebUrl: siteUrl,
-            webUrl: siteUrl,
-          },
-        },
-      ],
     });
   };
 
