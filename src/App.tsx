@@ -8,6 +8,7 @@ import { GuestBook } from './components/GuestBook';
 import { ParentsInfo } from './components/ParentsInfo';
 import { Info } from './components/Info';
 import { GuestInfo } from './components/GuestInfo';
+import shareImage from '../assets/images/w4.png';
 
 export default function App() {
   return (
