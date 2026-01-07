@@ -3,40 +3,24 @@ import { Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { ScrollAnimation } from './ScrollAnimation';
 import WeddingImage1 from '../assets/images/hm1.png';
-import WeddingImage2 from '../assets/images/jw1.png';
 import WeddingImage3 from '../assets/images/jw2.png';
-import WeddingImage4 from '../assets/images/jw3.png';
-import WeddingImage5 from '../assets/images/w1.png';
 import WeddingImage6 from '../assets/images/w2.png';
 import WeddingImage7 from '../assets/images/w3.png';
-import WeddingImage8 from '../assets/images/w4.png';
 import WeddingImage9 from '../assets/images/w5.png';
 import WeddingImage10 from '../assets/images/w6.png';
 import WeddingImage11 from '../assets/images/w7.png';
 import WeddingImage12 from '../assets/images/w8.png';
-
 import WeddingImage14 from '../assets/images/w10.png';
 import WeddingImage15 from '../assets/images/w11.png';
 import WeddingImage16 from '../assets/images/w12.png'; 
 import WeddingImage17 from '../assets/images/w13.png';
 import WeddingImage18 from '../assets/images/w14.png';
-import WeddingImage19 from '../assets/images/w15.png';  
 import WeddingImage20 from '../assets/images/w16.png';
 import WeddingImage22 from '../assets/images/w17.png';
-import WeddingImage21 from '../assets/images/w20.png';
+
 
 
 const galleryImages = [
-  {
-    id: 5,
-    url: WeddingImage5,
-    alt: 'Wedding photo 1'
-  },
-  {
-    id: 4,
-    url: WeddingImage4,
-    alt: 'jw3'
-  },
   {
     id: 6,
     url: WeddingImage6,
@@ -53,19 +37,9 @@ const galleryImages = [
     alt: 'jw2'
   },
   {
-    id: 2,
-    url: WeddingImage2,
-    alt: 'jw1'
-  },
-  {
     id: 7,
     url: WeddingImage7,
     alt: 'Wedding photo 3'
-  },
-  {
-    id: 8,
-    url: WeddingImage8,
-    alt: 'Wedding photo 4'
   },
   {
     id: 9,
@@ -91,11 +65,6 @@ const galleryImages = [
     id: 12,
     url: WeddingImage12,
     alt: 'Wedding photo 8'
-  },
-  {
-    id: 13, 
-    url: WeddingImage21,
-    alt: 'Wedding photo 13'
   },
   {
     id: 14,
@@ -126,11 +95,6 @@ const galleryImages = [
     id: 18,
     url: WeddingImage18,
     alt: 'Wedding photo 18'
-  },
-  {
-    id: 19,
-    url: WeddingImage19,
-    alt: 'Wedding photo 19'
   }
 ];
 
