@@ -16,12 +16,12 @@ import WeddingImage22 from '../assets/images/w17.png';
 
 const galleryImages = [
   {
-    id: 6,
+    id: 1,
     url: WeddingImage6,
     alt: 'Wedding photo 2'
   },
   {
-    id: 1,
+    id: 2,
     url: WeddingImage1,
     alt: 'hm'
   },
@@ -31,32 +31,32 @@ const galleryImages = [
     alt: 'jw2'
   },
   {
-    id: 9,
+    id: 4,
     url: WeddingImage9,
     alt: 'Wedding photo 5'
   },
   {
-    id: 20,
+    id: 5,
     url: WeddingImage20,
     alt: 'Wedding photo 20'
   },
   {
-    id: 14,
+    id: 6,
     url: WeddingImage14,
     alt: 'Wedding photo 14'
   },
   {
-    id: 16,
+    id: 7,
     url: WeddingImage16,
     alt: 'Wedding photo 16'
   },
   {
-    id: 20,
+    id: 8,
     url: WeddingImage22,
     alt: 'Wedding photo 20'
   },
   {
-    id: 18,
+    id: 9,
     url: WeddingImage18,
     alt: 'Wedding photo 18'
   }
@@ -183,30 +183,7 @@ export function Gallery() {
             ))}
           </div>
         </ScrollAnimation>
-        {!showAll && galleryImages.length > 9 && (
-          <ScrollAnimation delay={400}>
-            <div className="mt-8 text-center">
-              <button
-                onClick={() => setShowAll(true)}
-                className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                더보기
-              </button>
-            </div>
-          </ScrollAnimation>
-        )}
-        {showAll && galleryImages.length > 9 && (
-          <ScrollAnimation delay={400}>
-            <div className="mt-8 text-center">
-              <button
-                onClick={() => setShowAll(false)}
-                className="px-8 py-3 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                접기
-              </button>
-            </div>
-          </ScrollAnimation>
-        )}
+
 
         {/* Image Modal */}
         {selectedImageIndex !== null && (
@@ -256,7 +233,21 @@ export function Gallery() {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
-              {/* 이전 이미지(겹쳐 놓고 페이드 아웃) */}
+              {/* 기본 표시: 페이드 전환 중이 아닐 때는 단일 이미지로 렌더 */}
+              {!isFading && selectedImageIndex !== null && (
+                <ImageWithFallback
+                  src={galleryImages[selectedImageIndex].url}
+                  alt={galleryImages[selectedImageIndex].alt}
+                  className="max-h-[80vh] max-w-full w-auto h-auto mx-auto object-contain rounded-lg"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goToNext();
+                  }}
+                  loading="eager"
+                  disableFade
+                />
+              )}
+              {/* 페이드 전환 중: 겹쳐놓고 교차 페이드 */}
               {isFading && prevIndex !== null && (
                 <div
                   className="absolute inset-0 transition-opacity duration-300 ease-out"
@@ -273,7 +264,7 @@ export function Gallery() {
                 </div>
               )}
               {/* 현재 이미지(페이드 인) */}
-              {selectedImageIndex !== null && (
+              {isFading && selectedImageIndex !== null && (
                 <div
                   className="absolute inset-0 transition-opacity duration-300 ease-out"
                   style={{ opacity: isFading ? (fadeProgress ? 1 : 0) : 1 }}

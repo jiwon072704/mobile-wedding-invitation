@@ -37,7 +37,7 @@ export function ImageWithFallback(props: ImageWithFallbackProps) {
       style={style}
       loading={loading ?? 'lazy'}
       decoding={decoding ?? 'async'}
-      fetchPriority={fetchPriority ?? 'auto'}
+      {...(fetchPriority ? ({ fetchpriority: fetchPriority } as any) : {})}
       onLoad={() => setIsLoaded(true)}
       onError={handleError}
       {...rest}
