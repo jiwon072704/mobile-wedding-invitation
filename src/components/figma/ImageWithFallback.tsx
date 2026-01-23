@@ -5,6 +5,7 @@ const ERROR_IMG_SRC =
 
 type ImageWithFallbackProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   fetchPriority?: 'high' | 'low' | 'auto'
+  disableFade?: boolean
 }
 
 export function ImageWithFallback(props: ImageWithFallbackProps) {
@@ -15,7 +16,7 @@ export function ImageWithFallback(props: ImageWithFallbackProps) {
     setDidError(true)
   }
 
-  const { src, alt, style, className, loading, decoding, fetchPriority, ...rest } = props
+  const { src, alt, style, className, loading, decoding, fetchPriority, disableFade, ...rest } = props
 
   return didError ? (
     <div
@@ -30,7 +31,9 @@ export function ImageWithFallback(props: ImageWithFallbackProps) {
     <img
       src={src}
       alt={alt}
-      className={`${className ?? ''} ${isLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'} transition-opacity duration-300`}
+      className={`${className ?? ''} ${
+        disableFade ? '' : (isLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm') + ' transition-opacity duration-300'
+      }`}
       style={style}
       loading={loading ?? 'lazy'}
       decoding={decoding ?? 'async'}

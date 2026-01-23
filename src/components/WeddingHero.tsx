@@ -1,44 +1,16 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { useMemo, useEffect } from 'react';
-import weddingImage1 from '../assets/images/letter1.png';
-import weddingImage2 from '../assets/images/letter2.png';
-import weddingImage3 from '../assets/images/letter3.png';
-import weddingImage4 from '../assets/images/letter4.png'; 
+import weddingImage from '../assets/images/w4.png';
 import { ChevronDown } from 'lucide-react';
 
 
 export function WeddingHero() {
-  const randomHeroImage = useMemo(() => {
-    const images = [weddingImage1, weddingImage2, weddingImage3, weddingImage4];
-    const randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex]
-  }, []);
-
-  // Preload all possible hero images to speed up first paint on slow networks
-  useEffect(() => {
-    const images = [weddingImage1, weddingImage2, weddingImage3, weddingImage4];
-    const links: HTMLLinkElement[] = [];
-    images.forEach((href) => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      // fetchpriority is not widely supported on link, but safe to set
-      (link as any).fetchpriority = 'high';
-      link.href = href;
-      document.head.appendChild(link);
-      links.push(link);
-    });
-    return () => {
-      links.forEach((l) => document.head.removeChild(l));
-    };
-  }, []);
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <ImageWithFallback
-          src={randomHeroImage}
+          src={weddingImage}
           alt="Wedding"
           className="w-full h-full object-cover"
           loading="eager"

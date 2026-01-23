@@ -5,15 +5,9 @@ import { ScrollAnimation } from './ScrollAnimation';
 import WeddingImage1 from '../assets/images/hm1.png';
 import WeddingImage3 from '../assets/images/jw2.png';
 import WeddingImage6 from '../assets/images/w2.png';
-import WeddingImage7 from '../assets/images/w3.png';
 import WeddingImage9 from '../assets/images/w5.png';
-import WeddingImage10 from '../assets/images/w6.png';
-import WeddingImage11 from '../assets/images/w7.png';
-import WeddingImage12 from '../assets/images/w8.png';
 import WeddingImage14 from '../assets/images/w10.png';
-import WeddingImage15 from '../assets/images/w11.png';
 import WeddingImage16 from '../assets/images/w12.png'; 
-import WeddingImage17 from '../assets/images/w13.png';
 import WeddingImage18 from '../assets/images/w14.png';
 import WeddingImage20 from '../assets/images/w16.png';
 import WeddingImage22 from '../assets/images/w17.png';
@@ -37,11 +31,6 @@ const galleryImages = [
     alt: 'jw2'
   },
   {
-    id: 7,
-    url: WeddingImage7,
-    alt: 'Wedding photo 3'
-  },
-  {
     id: 9,
     url: WeddingImage9,
     alt: 'Wedding photo 5'
@@ -52,39 +41,14 @@ const galleryImages = [
     alt: 'Wedding photo 20'
   },
   {
-    id: 10,
-    url: WeddingImage10,
-    alt: 'Wedding photo 6'
-  },
-  {
-    id: 11,
-    url: WeddingImage11,
-    alt: 'Wedding photo 7'
-  },
-  {
-    id: 12,
-    url: WeddingImage12,
-    alt: 'Wedding photo 8'
-  },
-  {
     id: 14,
     url: WeddingImage14,
     alt: 'Wedding photo 14'
   },
   {
-    id: 15,
-    url: WeddingImage15,
-    alt: 'Wedding photo 15'
-  },
-  {
     id: 16,
     url: WeddingImage16,
     alt: 'Wedding photo 16'
-  },
-  {
-    id: 17,
-    url: WeddingImage17,
-    alt: 'Wedding photo 17'
   },
   {
     id: 20,
@@ -105,6 +69,9 @@ export function Gallery() {
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const touchMovedRef = useRef<boolean>(false);
+  const [isFading, setIsFading] = useState(false);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const [fadeProgress, setFadeProgress] = useState(false);
 
   const openImage = (index: number) => {
     setSelectedImageIndex(index);
@@ -117,21 +84,36 @@ export function Gallery() {
   };
 
   const goToPrevious = () => {
-    if (selectedImageIndex !== null) {
-      setShowSwipeHint(false);
-      setSelectedImageIndex(
-        selectedImageIndex === 0 ? galleryImages.length - 1 : selectedImageIndex - 1
-      );
-    }
+    if (selectedImageIndex === null) return;
+    setShowSwipeHint(false);
+    const nextIndex =
+      selectedImageIndex === 0 ? galleryImages.length - 1 : selectedImageIndex - 1;
+    startFade(nextIndex);
   };
 
   const goToNext = () => {
-    if (selectedImageIndex !== null) {
-      setShowSwipeHint(false);
-      setSelectedImageIndex(
-        selectedImageIndex === galleryImages.length - 1 ? 0 : selectedImageIndex + 1
-      );
-    }
+    if (selectedImageIndex === null) return;
+    setShowSwipeHint(false);
+    const nextIndex =
+      selectedImageIndex === galleryImages.length - 1 ? 0 : selectedImageIndex + 1;
+    startFade(nextIndex);
+  };
+
+  const startFade = (targetIndex: number) => {
+    if (selectedImageIndex === null) return;
+    setPrevIndex(selectedImageIndex);
+    setIsFading(true);
+    setFadeProgress(false);
+    setSelectedImageIndex(targetIndex);
+    // 다음 프레임에 실제 전환 시작
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setFadeProgress(true));
+    });
+    window.setTimeout(() => {
+      setIsFading(false);
+      setPrevIndex(null);
+      setFadeProgress(false);
+    }, 320);
   };
 
   const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
@@ -269,17 +251,46 @@ export function Gallery() {
 
             {/* Image */}
             <div
-              className="max-w-5xl max-h-[90vh] w-full px-4"
+              className="max-w-5xl h-[80vh] w-full px-4 overflow-hidden relative"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
-              <ImageWithFallback
-                src={galleryImages[selectedImageIndex].url}
-                alt={galleryImages[selectedImageIndex].alt}
-                className="w-full h-full object-contain rounded-lg"
-                onClick={(e) => e.stopPropagation()}
-              />
+              {/* 이전 이미지(겹쳐 놓고 페이드 아웃) */}
+              {isFading && prevIndex !== null && (
+                <div
+                  className="absolute inset-0 transition-opacity duration-300 ease-out"
+                  style={{ opacity: fadeProgress ? 0 : 1 }}
+                >
+                  <ImageWithFallback
+                    src={galleryImages[prevIndex].url}
+                    alt={galleryImages[prevIndex].alt}
+                    className="max-h-[80vh] max-w-full w-auto h-auto mx-auto object-contain rounded-lg"
+                    onClick={(e) => e.stopPropagation()}
+                    loading="eager"
+                    disableFade
+                  />
+                </div>
+              )}
+              {/* 현재 이미지(페이드 인) */}
+              {selectedImageIndex !== null && (
+                <div
+                  className="absolute inset-0 transition-opacity duration-300 ease-out"
+                  style={{ opacity: isFading ? (fadeProgress ? 1 : 0) : 1 }}
+                >
+                  <ImageWithFallback
+                    src={galleryImages[selectedImageIndex].url}
+                    alt={galleryImages[selectedImageIndex].alt}
+                    className="max-h-[80vh] max-w-full w-auto h-auto mx-auto object-contain rounded-lg"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToNext();
+                    }}
+                    loading="eager"
+                    disableFade
+                  />
+                </div>
+              )}
             </div>
 
             {/* Image Counter */}
