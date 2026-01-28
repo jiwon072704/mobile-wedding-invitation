@@ -4,11 +4,9 @@ import { WeddingDetails } from './components/WeddingDetails';
 import { Gallery } from './components/Gallery';
 import { Location } from './components/Location';
 import { AccountInfo } from './components/AccountInfo';
-import { GuestBook } from './components/GuestBook';
 import { ParentsInfo } from './components/ParentsInfo';
 import { Info } from './components/Info';
 import { GuestInfo } from './components/GuestInfo';
-import shareImage from '../assets/images/w4.png';
 
 declare global {
   interface Window {

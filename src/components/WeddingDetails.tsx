@@ -63,16 +63,16 @@ export function WeddingDetails() {
                   결혼식이 지났습니다
                 </div>
               )}
-              <div className="text-sm text-gray-500 mt-2 flex items-center justify-center gap-1">
-                {dDay > 0 && (
-                  <>
-                    현민
-                    <Heart className="w-3 h-3 text-pink fill-pink inline-block" />
-                    지원의 결혼식이 {dDay}일 남았습니다
-                  </>
-                )}
-                {dDay === 0 && '오늘은 결혼식 날입니다'}
-              </div>
+            <div className="text-sm text-gray-500 mt-2 px-4 text-center leading-relaxed">
+              {dDay > 0 && (
+                <>
+                  현민
+                  <Heart className="w-3 h-3 text-pink fill-pink inline-block mx-0.5" />
+                  지원의 결혼식이 {dDay}일 남았습니다
+                </>
+              )}
+              {dDay === 0 && '오늘은 결혼식 날입니다'}
+            </div>
             </div>
           </div>
         </ScrollAnimation>

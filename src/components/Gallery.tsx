@@ -61,129 +61,119 @@ const galleryImages = [
     alt: 'Wedding photo 18'
   }
 ];
-
 export function Gallery() {
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-  const [showAll, setShowAll] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
-  const touchStartXRef = useRef<number | null>(null);
-  const touchStartYRef = useRef<number | null>(null);
-  const touchMovedRef = useRef<boolean>(false);
-  const [isFading, setIsFading] = useState(false);
-  const [prevIndex, setPrevIndex] = useState<number | null>(null);
-  const [fadeProgress, setFadeProgress] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  
+  const touchStartXRef = useRef(null);
+  const touchStartTimeRef = useRef(null);
 
-  const openImage = (index: number) => {
+  const openImage = (index) => {
     setSelectedImageIndex(index);
     setShowSwipeHint(true);
+    setTimeout(() => setShowSwipeHint(false), 2500);
   };
 
   const closeImage = () => {
     setSelectedImageIndex(null);
     setShowSwipeHint(false);
+    setDragOffset(0);
   };
 
   const goToPrevious = () => {
     if (selectedImageIndex === null) return;
     setShowSwipeHint(false);
-    const nextIndex =
-      selectedImageIndex === 0 ? galleryImages.length - 1 : selectedImageIndex - 1;
-    startFade(nextIndex);
+    const nextIndex = selectedImageIndex === 0 ? galleryImages.length - 1 : selectedImageIndex - 1;
+    setSelectedImageIndex(nextIndex);
   };
 
   const goToNext = () => {
     if (selectedImageIndex === null) return;
     setShowSwipeHint(false);
-    const nextIndex =
-      selectedImageIndex === galleryImages.length - 1 ? 0 : selectedImageIndex + 1;
-    startFade(nextIndex);
+    const nextIndex = selectedImageIndex === galleryImages.length - 1 ? 0 : selectedImageIndex + 1;
+    setSelectedImageIndex(nextIndex);
   };
 
-  const startFade = (targetIndex: number) => {
-    if (selectedImageIndex === null) return;
-    setPrevIndex(selectedImageIndex);
-    setIsFading(true);
-    setFadeProgress(false);
-    setSelectedImageIndex(targetIndex);
-    // 다음 프레임에 실제 전환 시작
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setFadeProgress(true));
-    });
-    window.setTimeout(() => {
-      setIsFading(false);
-      setPrevIndex(null);
-      setFadeProgress(false);
-    }, 320);
-  };
-
-  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+  const handleTouchStart = (e) => {
     const touch = e.touches[0];
     touchStartXRef.current = touch.clientX;
-    touchStartYRef.current = touch.clientY;
-    touchMovedRef.current = false;
+    touchStartTimeRef.current = Date.now();
+    setIsDragging(true);
+    setShowSwipeHint(false);
   };
 
-  const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+  const handleTouchMove = (e) => {
+    if (!isDragging || touchStartXRef.current === null) return;
+    
     const touch = e.touches[0];
-    const startX = touchStartXRef.current;
-    const startY = touchStartYRef.current;
-    if (startX == null || startY == null) return;
-    const dx = touch.clientX - startX;
-    const dy = touch.clientY - startY;
-    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
-      touchMovedRef.current = true;
-    }
+    const dx = touch.clientX - touchStartXRef.current;
+    
+    // 저항감 적용 (양 끝에서)
+    const resistance = 0.5;
+    const adjustedOffset = dx * resistance;
+    
+    setDragOffset(adjustedOffset);
   };
 
-  const handleTouchEnd: React.TouchEventHandler<HTMLDivElement> = (e) => {
-    const startX = touchStartXRef.current;
-    if (startX == null) return;
-    const touch = e.changedTouches[0];
-    const dx = touch.clientX - startX;
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    
     const SWIPE_THRESHOLD = 50;
-    if (Math.abs(dx) >= SWIPE_THRESHOLD) {
-      setShowSwipeHint(false);
-      if (dx < 0) {
+    const VELOCITY_THRESHOLD = 0.5;
+    
+    const timeDiff = Date.now() - touchStartTimeRef.current;
+    const velocity = Math.abs(dragOffset) / timeDiff;
+    
+    // 빠른 스와이프 또는 충분한 거리 이동 시 페이지 전환
+    if (Math.abs(dragOffset) > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) {
+      if (dragOffset < 0) {
         goToNext();
       } else {
         goToPrevious();
       }
     }
+    
+    // 리셋
+    setDragOffset(0);
+    setIsDragging(false);
     touchStartXRef.current = null;
-    touchStartYRef.current = null;
-    touchMovedRef.current = false;
+    touchStartTimeRef.current = null;
   };
 
-  const displayedImages = showAll ? galleryImages : galleryImages.slice(0, 9);
+  // 이미지 슬라이드 스타일
+  const getImageStyle = () => {
+    return {
+      transform: `translateX(${dragOffset}px)`,
+      transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      opacity: 1 - Math.abs(dragOffset) / 400 // 드래그 시 약간 투명해짐
+    };
+  };
 
   return (
-    <div className="py-16 px-6 bg-white">
+    <div className="py-16 px-6 bg-white min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <ScrollAnimation>
-          <div className="text-center mb-12">
-            <h2 className="text-lg text-pink mb-2">Gallery</h2>
-            <p className="text-gray-400 text-sm">갤러리</p>
-          </div>
-        </ScrollAnimation>
+        <div className="text-center mb-12">
+          <h2 className="text-lg text-pink-500 mb-2">Gallery</h2>
+          <p className="text-gray-400 text-sm">갤러리</p>
+        </div>
 
-        <ScrollAnimation delay={200}>
-          <div className="grid grid-cols-3 gap-2">
-            {displayedImages.map((image, index) => (
-              <div
-                key={image.id}
-                className="relative aspect-square overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer"
-                onClick={() => openImage(index)}
-              >
-                <ImageWithFallback
-                  src={image.url}
-                  alt={image.alt}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
-        </ScrollAnimation>
-
+        <div className="grid grid-cols-3 gap-2">
+          {galleryImages.map((image, index) => (
+            <div
+              key={image.id}
+              className="relative aspect-square overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+              onClick={() => openImage(index)}
+            >
+              <img
+                src={image.url}
+                alt={image.alt}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          ))}
+        </div>
 
         {/* Image Modal */}
         {selectedImageIndex !== null && (
@@ -192,13 +182,17 @@ export function Gallery() {
             onClick={closeImage}
           >
             {showSwipeHint && (
-              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white px-4 py-2 animate-pulse pointer-events-none">
-                옆으로 밀어 넘겨보세요
+              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm animate-pulse pointer-events-none text-sm">
+                ← 사진을 밀어서 넘겨보세요 →
               </div>
             )}
+
             {/* Close Button */}
             <button
-              onClick={closeImage}
+              onClick={(e) => {
+                e.stopPropagation();
+                closeImage();
+              }}
               className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10"
             >
               <X className="w-6 h-6" />
@@ -226,66 +220,29 @@ export function Gallery() {
               <ChevronRight className="w-6 h-6" strokeWidth={3} />
             </button>
 
-            {/* Image */}
+            {/* Image Container - 드래그 가능 */}
             <div
-              className="max-w-5xl h-[80vh] w-full px-4 overflow-hidden relative"
+              className="w-full h-[80vh] flex items-center justify-center px-16 select-none"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
+              onClick={(e) => e.stopPropagation()}
             >
-              {/* 기본 표시: 페이드 전환 중이 아닐 때는 단일 이미지로 렌더 */}
-              {!isFading && selectedImageIndex !== null && (
-                <ImageWithFallback
+              <div 
+                style={getImageStyle()}
+                className="relative"
+              >
+                <img
                   src={galleryImages[selectedImageIndex].url}
                   alt={galleryImages[selectedImageIndex].alt}
-                  className="max-h-[80vh] max-w-full w-auto h-auto mx-auto object-contain rounded-lg"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    goToNext();
-                  }}
-                  loading="eager"
-                  disableFade
+                  className="max-h-[80vh] max-w-full w-auto h-auto object-contain rounded-lg pointer-events-none"
+                  draggable="false"
                 />
-              )}
-              {/* 페이드 전환 중: 겹쳐놓고 교차 페이드 */}
-              {isFading && prevIndex !== null && (
-                <div
-                  className="absolute inset-0 transition-opacity duration-300 ease-out"
-                  style={{ opacity: fadeProgress ? 0 : 1 }}
-                >
-                  <ImageWithFallback
-                    src={galleryImages[prevIndex].url}
-                    alt={galleryImages[prevIndex].alt}
-                    className="max-h-[80vh] max-w-full w-auto h-auto mx-auto object-contain rounded-lg"
-                    onClick={(e) => e.stopPropagation()}
-                    loading="eager"
-                    disableFade
-                  />
-                </div>
-              )}
-              {/* 현재 이미지(페이드 인) */}
-              {isFading && selectedImageIndex !== null && (
-                <div
-                  className="absolute inset-0 transition-opacity duration-300 ease-out"
-                  style={{ opacity: isFading ? (fadeProgress ? 1 : 0) : 1 }}
-                >
-                  <ImageWithFallback
-                    src={galleryImages[selectedImageIndex].url}
-                    alt={galleryImages[selectedImageIndex].alt}
-                    className="max-h-[80vh] max-w-full w-auto h-auto mx-auto object-contain rounded-lg"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      goToNext();
-                    }}
-                    loading="eager"
-                    disableFade
-                  />
-                </div>
-              )}
+              </div>
             </div>
 
             {/* Image Counter */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white">
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm">
               {selectedImageIndex + 1} / {galleryImages.length}
             </div>
           </div>
