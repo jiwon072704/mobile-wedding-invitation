@@ -3,7 +3,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Utensils, MapPin, Church } from 'lucide-react';
 import { ScrollAnimation } from './ScrollAnimation';
 import VenueImage from '../assets/images/venueg.jpg';
-import WeddingImage from '../assets/images/3_1.png';
+import WeddingImage from '../assets/images/3-1.png';
 
 type TabType = 'meal' | 'venue' | 'ceremony';
 
