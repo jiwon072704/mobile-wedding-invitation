@@ -1,28 +1,26 @@
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Camera, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
-import { ScrollAnimation } from './ScrollAnimation';
-import WeddingImage1 from '../assets/images/hm1.png';
-import WeddingImage3 from '../assets/images/jw2.png';
-import WeddingImage6 from '../assets/images/w2.png';
-import WeddingImage9 from '../assets/images/w5.png';
-import WeddingImage14 from '../assets/images/w10.png';
-import WeddingImage16 from '../assets/images/w12.png'; 
-import WeddingImage18 from '../assets/images/w14.png';
-import WeddingImage20 from '../assets/images/w16.png';
-import WeddingImage22 from '../assets/images/w17.png';
+import WeddingImage1 from '../assets/images/1.png';
+import WeddingImage2 from '../assets/images/2.png';
+import WeddingImage3 from '../assets/images/3.png';
+import WeddingImage4 from '../assets/images/4.png';
+import WeddingImage5 from '../assets/images/5.png';
+import WeddingImage6 from '../assets/images/6.png'; 
+import WeddingImage7 from '../assets/images/7.png';
+import WeddingImage8 from '../assets/images/8.png';
+import WeddingImage9 from '../assets/images/9.png';
 
 
 
 const galleryImages = [
   {
     id: 1,
-    url: WeddingImage6,
-    alt: 'Wedding photo 2'
+    url: WeddingImage1,
+    alt: 'Wedding photo 1'
   },
   {
     id: 2,
-    url: WeddingImage1,
+    url: WeddingImage2,
     alt: 'hm'
   },
   {
@@ -32,33 +30,33 @@ const galleryImages = [
   },
   {
     id: 4,
-    url: WeddingImage9,
-    alt: 'Wedding photo 5'
+    url: WeddingImage4,
+    alt: 'Wedding photo 4'
   },
   {
     id: 5,
-    url: WeddingImage20,
-    alt: 'Wedding photo 20'
+    url: WeddingImage5,
+    alt: 'Wedding photo 5'
   },
   {
     id: 6,
-    url: WeddingImage14,
-    alt: 'Wedding photo 14'
+    url: WeddingImage6,
+    alt: 'Wedding photo 6'
   },
   {
     id: 7,
-    url: WeddingImage16,
-    alt: 'Wedding photo 16'
+    url: WeddingImage7,
+    alt: 'Wedding photo 7'
   },
   {
     id: 8,
-    url: WeddingImage22,
-    alt: 'Wedding photo 20'
+    url: WeddingImage8,
+    alt: 'Wedding photo 8'
   },
   {
     id: 9,
-    url: WeddingImage18,
-    alt: 'Wedding photo 18'
+    url: WeddingImage9,
+    alt: 'Wedding photo 9'
   }
 ];
 export function Gallery() {
