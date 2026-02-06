@@ -150,10 +150,10 @@ export function Gallery() {
   };
 
   return (
-    <div className="py-16 px-6 bg-white min-h-screen">
+    <div className="py-16 px-6 bg-white">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-lg text-pink-500 mb-2">Gallery</h2>
+          <h2 className="text-lg text-pink mb-2">Gallery</h2>
           <p className="text-gray-400 text-sm">갤러리</p>
         </div>
 
