@@ -23,7 +23,7 @@ export function GuestInfo() {
         <ScrollAnimation>
           <div className="text-center mb-12">
             <h2 className="text-lg text-pink mb-2">Information</h2>
-            <p className="text-gray-400 text-sm">안내사항</p>
+            <p className="text-gray-400 text-sm">안내 사항</p>
           </div>
 
 
