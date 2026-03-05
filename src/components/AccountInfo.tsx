@@ -9,8 +9,8 @@ interface Account {
 }
 
 export function AccountInfo() {
-  const [groomOpen, setGroomOpen] = useState(false);
-  const [brideOpen, setBrideOpen] = useState(false);
+  const [groomOpen, setGroomOpen] = useState(true);
+  const [brideOpen, setBrideOpen] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const groomAccounts: Account[] = [
