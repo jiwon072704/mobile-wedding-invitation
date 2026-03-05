@@ -1,14 +1,14 @@
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import WeddingImage1 from '../assets/images/1.png';
-import WeddingImage2 from '../assets/images/2.png';
-import WeddingImage3 from '../assets/images/3.png';
+import WeddingImage2 from '../assets/images/2.jpg';
+import WeddingImage3 from '../assets/images/3.jpg';
 import WeddingImage4 from '../assets/images/4.png';
 import WeddingImage5 from '../assets/images/5.png';
 import WeddingImage6 from '../assets/images/6.png'; 
 import WeddingImage7 from '../assets/images/7.png';
 import WeddingImage8 from '../assets/images/8.png';
-import WeddingImage9 from '../assets/images/9.png';
+import WeddingImage9 from '../assets/images/9.jpg';
 
 
 
