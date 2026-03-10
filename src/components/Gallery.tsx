@@ -64,9 +64,12 @@ export function Gallery() {
   const [showSwipeHint, setShowSwipeHint] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   
   const touchStartXRef = useRef(null);
   const touchStartTimeRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const suppressClickRef = useRef(false);
 
   const openImage = (index) => {
     setSelectedImageIndex(index);
@@ -100,6 +103,7 @@ export function Gallery() {
     touchStartTimeRef.current = Date.now();
     setIsDragging(true);
     setShowSwipeHint(false);
+    suppressClickRef.current = true;
   };
 
   const handleTouchMove = (e) => {
@@ -126,25 +130,49 @@ export function Gallery() {
     
     // 빠른 스와이프 또는 충분한 거리 이동 시 페이지 전환
     if (Math.abs(dragOffset) > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) {
-      if (dragOffset < 0) {
-        goToNext();
-      } else {
-        goToPrevious();
-      }
+      const width = containerRef.current?.clientWidth ?? window.innerWidth;
+      const target = dragOffset < 0 ? -Math.min(600, Math.round(width * 0.9)) : Math.min(600, Math.round(width * 0.9));
+      // 현재 이미지를 자연스럽게 밖으로 보낸 다음 인덱스 변경
+      setIsDragging(false);
+      setIsAnimating(true);
+      setDragOffset(target);
+      setTimeout(() => {
+        if (dragOffset < 0) {
+          goToNext();
+        } else {
+          goToPrevious();
+        }
+        // 새 이미지로 바뀐 후 위치/애니메이션 초기화
+        setIsAnimating(false);
+        setDragOffset(0);
+      }, 220);
+    } else {
+      // 리셋
+      setIsDragging(false);
+      setDragOffset(0);
     }
-    
-    // 리셋
-    setDragOffset(0);
-    setIsDragging(false);
     touchStartXRef.current = null;
     touchStartTimeRef.current = null;
+    // 다음 클릭 이벤트 억제 (터치 후 합성 클릭 방지)
+    setTimeout(() => {
+      suppressClickRef.current = false;
+    }, 50);
+  };
+
+  const handleOverlayClick = (e) => {
+    // 터치 제스처 직후이거나 드래그 중이면 닫기 방지
+    if (suppressClickRef.current || isDragging || Math.abs(dragOffset) > 0) {
+      e.stopPropagation();
+      return;
+    }
+    closeImage();
   };
 
   // 이미지 슬라이드 스타일
   const getImageStyle = () => {
     return {
       transform: `translateX(${dragOffset}px)`,
-      transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: isDragging ? 'none' : 'transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1)',
       opacity: 1 - Math.abs(dragOffset) / 400 // 드래그 시 약간 투명해짐
     };
   };
@@ -177,7 +205,11 @@ export function Gallery() {
         {selectedImageIndex !== null && (
           <div
             className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
-            onClick={closeImage}
+            onClick={handleOverlayClick}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            style={{ touchAction: 'pan-y' }}
           >
             {showSwipeHint && (
               <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-white px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm animate-pulse pointer-events-none text-sm">
@@ -220,10 +252,8 @@ export function Gallery() {
 
             {/* Image Container - 드래그 가능 */}
             <div
+              ref={containerRef}
               className="w-full h-[80vh] flex items-center justify-center px-16 select-none"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
               onClick={(e) => e.stopPropagation()}
             >
               <div 
